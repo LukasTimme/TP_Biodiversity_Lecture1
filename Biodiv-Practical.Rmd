@@ -6,6 +6,9 @@ output:
     allow_skip: true
 runtime: shiny_prerendered
 bibliography: REFERENCES.bib
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
 
 ```{r}
