@@ -1009,7 +1009,7 @@ Function `div_part()` computes $\alpha$, $\beta$ and $\gamma$ diversity.
 div_part(paracou_6_abd, q = 1)
 ```
 
-### Step by step
+### Step by step, do it at home
 
 ```{r}
 # Alpha entropy
