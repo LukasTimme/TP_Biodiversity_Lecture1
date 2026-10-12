@@ -76,7 +76,7 @@ library("vegan")
 data(BCI)
 # Sum the 50 1-ha plots
 BCI_50ha_abd <- colSums(BCI)
-BCI_50ha_abd %>% 
+B <-  BCI_50ha_abd %>% 
   log10() %>% 
   hist(breaks = 15, main = "Preston diagram")
 ```
@@ -130,7 +130,7 @@ rcommunity(
   # One community
   1,
   # Number of trees
-  size = 10000,
+  size = 1000000000,
   # Number of species
   species_number = 300,
   # Distribution
@@ -182,6 +182,15 @@ rcommunity(
   autoplot()
 ```
 
+```{r}
+ggplot() +
+  geom_function(
+    fun = dgamma,
+    args = list(shape = 1), 
+    xlim = c(0, 10)
+  )
+```
+
 ## Estimate the parameters
 
 Draw a very large lognormal distribution.
@@ -201,6 +210,8 @@ rcommunity(
   # Name it
   mutate(site = "Large log-normal") ->
   comm_large_lnorm
+comm_large_lnorm %>% 
+  autoplot()
 ```
 
 Sample it.
@@ -224,6 +235,12 @@ comm_large_lnorm %>%
 autoplot(comm_lnorm, fit_rac = TRUE, distribution = "lnorm")
 # Estimate the parameters
 fit_rac(comm_lnorm, distribution = "lnorm") 
+```
+
+```{r}
+BCI_50ha_abd %>% 
+  as_abundances() %>% 
+  autoplot(fit_rac = TRUE, distribution ="lnorm")
 ```
 
 ## Zero-sum multinomial distribution
@@ -943,9 +960,9 @@ Three habitats: A, B, C.
 ```{r}
 matrix(
   c(
-    0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 0, 1, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 1, 1, 1
+    0, 0, 0, 0, 0, 3, 3, 3, 3, 3,
+    3, 3, 3, 3, 3, 3, 0, 3, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 3, 3, 3
   ),
   nrow = 3, 
   byrow = TRUE
@@ -968,7 +985,7 @@ div_richness(mock_island_abd, gamma = TRUE, estimator = "naive")
 Multiplicative partitioning: 10 effective species ($\gamma$) = 5 effective species per habitat ($\alpha$) times 2 habitats ($\beta$).
 
 ```{r}
-div_part(mock_island_abd, q = 0, estimator = "naive")
+div_part(mock_island_abd, q = 0)
 ```
 
 Additive partitioning: 10 effective species ($\gamma$) = 5 effective species per habitat ($\alpha$) + 5 more species ($\beta$).
